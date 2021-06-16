@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.1",
     "express": "^4.17.1",
+    "pg": "^8.6.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "^4.0.3",
@@ -42,5 +43,5 @@
     "concurrently": "^6.2.0",
     "nodemon": "^2.0.7"
   },
-  "proxy" : "http://localhost:5020"
+  "proxy": "http://localhost:5020"
 }
