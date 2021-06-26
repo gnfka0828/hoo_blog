@@ -13,3 +13,7 @@ Hooram's Blog
 
 
 2. git User 정보 확인 : https://velog.io/@korea_webclass/git-%EC%82%AC%EC%9A%A9%EC%9E%90-%EC%A0%95%EB%B3%B4-%ED%99%95%EC%9D%B8%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95
+
+3. pg 모듈을 이용하여 postgresql과 react 연동 :
+https://dunchi.tistory.com/62
+https://node-postgres.com/api/client  
