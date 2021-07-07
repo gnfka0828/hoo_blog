@@ -17,3 +17,5 @@ Hooram's Blog
 3. pg 모듈을 이용하여 postgresql과 react 연동 :
 https://dunchi.tistory.com/62
 https://node-postgres.com/api/client  
+
+4. create-react-app이 안 될 때 : https://devsoyoung.github.io/posts/cra-reinstall/
