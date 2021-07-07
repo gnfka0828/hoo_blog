@@ -12,7 +12,7 @@ const client = new Client({
   port: "" /* Set Port */,
 });
 
-client.connect();
+//client.connect();
 
 app.get('/', (req, res) => {
     res.send("Welcome to Hoo's blog");
@@ -22,17 +22,17 @@ app.get('/api/host', (req, res) => {
     res.send({ host : 'hooram23' });
 })
 
-app.get('/api/getInfo', (req, res) => {
-    client.query('SELECT * from testa', (err, data) => {
-        if (!err) {
-            res.send(data.rows);
-        } else {
-            console.log(err);
-            res.send(err);
-        }
-        //client.end();
-    });
-})
+// app.get('/api/getInfo', (req, res) => {
+//     client.query('SELECT * from testa', (err, data) => {
+//         if (!err) {
+//             res.send(data.rows);
+//         } else {
+//             console.log(err);
+//             res.send(err);
+//         }
+//         //client.end();
+//     });
+// })
 
 app.listen(PORT, () => {
     console.log(`Server On : http://localhost:${PORT}/`);
