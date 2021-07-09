@@ -4,7 +4,7 @@ function Home() {
         <div id="wrapper">
         {/* <!-- Header --> */}
             <header id="header" className="alt">
-                <a href="index.html" className="logo"><strong>Forty</strong> <span>by HTML5 UP</span></a>
+                <a href="index.html" className="logo"><strong>Hoolog</strong> <span>by hooram.seo</span></a>
                 <nav>
                     <a href="#menu">Menu</a>
                 </nav>
@@ -30,13 +30,15 @@ function Home() {
             <section id="banner" className="major">
                 <div className="inner">
                     <header className="major">
-                        <h1>Hi, my name is Forty</h1>
+                        <h1>Hi, my name is hooram</h1>
                     </header>
                     <div className="content">
-                        <p>A responsive site template designed by HTML5 UP<br />
-                        and released under the Creative Commons.</p>
+                        <p>BBongdong♥Mandugi BBongdong♥Mandugi BBongdong♥Mandugi BBongdong♥Mandugi BBongdong♥Mandugi BBongdong♥Mandugi BBongdong♥Mandugi BBongdong♥Mandugi BBongdong♥Mandugi BBongdong♥Mandugi </p>
                         <ul className="actions">
-                            <li><a href="#bannerend" className="button next scrolly">Get Started</a></li>
+                            <li><a href="#bannerend" className="button next scrolly">Go to Article</a></li>
+                        </ul>
+                        <ul className="actions">
+                            <li><a href="#bannerend" className="button next scrolly">Go to Blog</a></li>
                         </ul>
                     </div>
                 </div>
@@ -57,16 +59,6 @@ function Home() {
                                 <p>Ipsum dolor sit amet</p>
                             </header>
                         </article>
-                        {/* 
-                        <article>
-                            <span className="image">
-                                <img src="images/pic02.jpg" alt="" />
-                            </span>
-                            <header className="major">
-                                <h3><a href="landing.html" className="link">Tempus</a></h3>
-                                <p>feugiat amet tempus</p>
-                            </header>
-                        </article>
                         <article>
                             <span className="image">
                                 <img src="images/pic03.jpg" alt="" />
@@ -76,6 +68,16 @@ function Home() {
                                 <p>Lorem etiam nullam</p>
                             </header>
                         </article>
+                        <article className="plusarticle">
+                            <span className="image">
+                                <img src="images/pic02.jpg" alt="" />
+                            </span>
+                            <header className="major">
+                                {/* <h3><a href="landing.html" className="link">Tempus</a></h3> */}
+                                <img class="plusarticle" src="images/plus_article.png" alt="" />
+                            </header>
+                        </article>
+                        {/* 
                         <article>
                             <span className="image">
                                 <img src="images/pic04.jpg" alt="" />

@@ -1767,6 +1767,11 @@ input, select, textarea {
 
 /* Section/Article */
 
+	article.plusarticle {
+		display: flex;
+  		justify-content: center;
+	}
+
 	section.special, article.special {
 		text-align: center;
 	}
@@ -2161,6 +2166,10 @@ input, select, textarea {
 	}
 
 /* Image */
+	img.plusarticle {
+		width: 5rem !important;
+		height: 5rem;
+	}
 
 	.image {
 		border: 0;
