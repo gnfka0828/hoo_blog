@@ -19,3 +19,5 @@ https://dunchi.tistory.com/62
 https://node-postgres.com/api/client  
 
 4. create-react-app이 안 될 때 : https://devsoyoung.github.io/posts/cra-reinstall/
+
+5. 깃 에러(Git Error) Logon failed, use ctrl+c to cancel basic credential prompt. : https://shinye0213.tistory.com/242
