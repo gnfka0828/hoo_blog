@@ -52,7 +52,7 @@ function Home() {
                     <section id="one" className="tiles">
                         <article>
                             <span className="image">
-                                <img src="images/pic01.jpg" alt="" />
+                                <a href="landing.html"><img src="images/pic01.jpg" alt="" /></a>
                             </span>
                             <header className="major">
                                 <h3><a href="landing.html" className="link">Aliquam</a></h3>
@@ -68,16 +68,6 @@ function Home() {
                                 <p>Lorem etiam nullam</p>
                             </header>
                         </article>
-                        <article className="plusarticle">
-                            <span className="image">
-                                <img src="images/pic02.jpg" alt="" />
-                            </span>
-                            <header className="major">
-                                {/* <h3><a href="landing.html" className="link">Tempus</a></h3> */}
-                                <img class="plusarticle" src="images/plus_article.png" alt="" />
-                            </header>
-                        </article>
-                        {/* 
                         <article>
                             <span className="image">
                                 <img src="images/pic04.jpg" alt="" />
@@ -87,6 +77,16 @@ function Home() {
                                 <p>Nisl sed aliquam</p>
                             </header>
                         </article>
+                        <article className="plusarticle">
+                            <span className="image">
+                                <img src="images/pic02.jpg" alt="" />
+                            </span>
+                            <header>
+                                {/* <h3><a href="landing.html" className="link">Tempus</a></h3> */}
+                                <a href="landing.html" className="link"><img className="plusarticle" src="images/plus_article.png" alt="" /></a>
+                            </header>
+                        </article>
+                        {/* 
                         <article>
                             <span className="image">
                                 <img src="images/pic05.jpg" alt="" />
