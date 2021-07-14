@@ -155,9 +155,9 @@ input, select, textarea {
 		-webkit-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
 		-ms-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
 		transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
-		border-bottom: dotted 1px;
+		/* border-bottom: dotted 1px; */
 		color: inherit;
-		text-decoration: none;
+		text-decoration: none !important;
 	}
 
 		a:hover {
@@ -1767,6 +1767,11 @@ input, select, textarea {
 
 /* Section/Article */
 
+	article.plusarticle {
+		display: flex;
+  		justify-content: center;
+	}
+
 	section.special, article.special {
 		text-align: center;
 	}
@@ -2161,6 +2166,11 @@ input, select, textarea {
 	}
 
 /* Image */
+	img.plusarticle {
+		width: 5rem !important;
+		height: 5rem;
+		margin-bottom: 1rem;
+	}
 
 	.image {
 		border: 0;
@@ -3588,8 +3598,8 @@ input, select, textarea {
 
 		}
 
-/* test */
-	#test {
+/* bannerend */
+	#bannerend {
 		background-color: #2a2f4a;
 		height: 3.25em;
 	}
