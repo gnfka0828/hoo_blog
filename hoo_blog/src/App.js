@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect, useCallback } from 'react';
+//import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
 
@@ -16,20 +16,18 @@ function App() {
     setHost(res.data.host);
   }
 
-  const _getInfo = async() => {
+  const _getInfo = useCallback(async() => {
     const res = await axios.get('/api/getInfo');
     
     if ( JSON.stringify(prevInfo) !== JSON.stringify(res.data) ) {
       setInfo(res.data);
     }
-  };
+  }, [prevInfo]);
 
   useEffect(() => {
     _getHost();
-    //_getInfo();
-  }, [host, info]);
-
-  //console.log(host, info);
+    _getInfo();
+  }, [host, info, _getInfo]);
 
   return (
     <Home />
