@@ -27,7 +27,8 @@ app.get('/api/host', (req, res) => {
 })
 
 app.get('/api/getInfo', (req, res) => {
-    client.query('SELECT * from testa', (err, data) => {
+    //client.query('SELECT * from testa', (err, data) => {
+    client.query('SELECT * from test_User1', (err, data) => {
         if (!err) {
             res.send(data.rows);
         } else {
