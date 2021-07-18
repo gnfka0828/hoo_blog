@@ -57,11 +57,11 @@ const Login = (props) => {
                         <div className="fields">
                             <div className="field">
                                 <label htmlFor="name">ID</label>
-                                <input type="text" name="id" id="id" autocomplete="off" value={id} onChange={handleChange} />
+                                <input type="text" name="id" id="id" autoComplete="off" value={id} onChange={handleChange} />
                             </div>
                             <div className="field">
                                 <label htmlFor="email">PASSWORD</label>
-                                <input type="password" name="pw" id="pw" autocomplete="off" value={pw} onChange={handleChange} />
+                                <input type="password" name="pw" id="pw" autoComplete="off" value={pw} onChange={handleChange} />
                             </div>
                         </div>
                         <ul className="actions">
