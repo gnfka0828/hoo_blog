@@ -1776,6 +1776,13 @@ input, select, textarea {
 		text-align: center;
 	}
 
+	section.login {
+		width: 60%;
+		margin-left: 20%;
+		top: 20%;
+		position: fixed;
+	}
+
 	header.major {
 		width: -moz-max-content;
 		width: -webkit-max-content;
@@ -1927,6 +1934,11 @@ input, select, textarea {
 		padding: 0 1em;
 		text-decoration: none;
 		width: 100%;
+	}
+
+	input[type="text"],
+	input[type="password"] {
+		font-weight: bold;
 	}
 
 		input[type="text"]:invalid,

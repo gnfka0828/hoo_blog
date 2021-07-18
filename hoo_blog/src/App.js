@@ -2,8 +2,9 @@ import React, { useState, useEffect, useCallback } from 'react';
 //import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
-
 import Home from './component/Home';
+import Login from './component/Login';
+import { Route, withRouter } from 'react-router-dom';
 
 function App() {
   const [host, setHost] = useState("default");
@@ -30,7 +31,11 @@ function App() {
   }, [host, info, _getInfo]);
 
   return (
-    <Home />
+    // <Home />
+    <>
+      <Route exact path="/" component={Home}/>
+      <Route exact path="/Login" component={Login}/>
+    </>
   );
 }
 

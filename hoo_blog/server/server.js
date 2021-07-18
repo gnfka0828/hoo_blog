@@ -27,7 +27,6 @@ app.get('/api/host', (req, res) => {
 })
 
 app.get('/api/getInfo', (req, res) => {
-    //client.query('SELECT * from testa', (err, data) => {
     client.query('SELECT * from test_User1', (err, data) => {
         if (!err) {
             res.send(data.rows);
@@ -35,10 +34,28 @@ app.get('/api/getInfo', (req, res) => {
             console.log(err);
             res.send(err);
         }
-        //client.end();
     });
+
+    //client.end();
+})
+
+app.get('/api/getUser/:id', (req, res) => {
+    client.query("SELECT pw from test_Users where id=$1", [req.params.id] ,(err, data) => {
+        if (!err) {
+            res.send(data.rows);
+        } else {
+            console.log(err);
+            res.send(err);
+        }
+    });
+
+    //client.end();
 })
 
 app.listen(PORT, () => {
     console.log(`Server On : http://localhost:${PORT}/`);
 })
+
+// process.on('exit', function() {
+//     console.log("exit");
+// });

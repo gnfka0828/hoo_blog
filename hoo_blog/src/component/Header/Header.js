@@ -1,7 +1,10 @@
+// import { Link } from 'react-router-dom';
+
 const Header = () => {
     return (
         <header id="header" className="alt">
             <a href="index.html" className="logo"><strong>Hoolog</strong> <span>by hooram.seo</span></a>
+            {/* <Link to="/" className="logo"><strong>Hoolog</strong> <span>by hooram.seo</span></Link> */}
             <nav>
                 <a href="#menu">Menu</a>
             </nav>
