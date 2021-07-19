@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import axios from 'axios';
 
 const Login = (props) => {
     const [disabled, setDisabled] = useState(false);
     const [id, setID] = useState('');
     const [pw, setPW] = useState('');
+    const idInputEl = useRef(null);
 
     const _getUser = async(resolve, reject) => {
         const getPW = await axios.get('/api/getPW/' + id );
@@ -40,6 +41,7 @@ const Login = (props) => {
                 alert("ID나 PASSWORD를 잘못 입력하였습니다. 다시 입력하여 주십시오.");
                 setID("");
                 setPW("");
+                idInputEl.current.focus();
             }
         });
     };
@@ -62,7 +64,7 @@ const Login = (props) => {
                         <div className="fields">
                             <div className="field">
                                 <label htmlFor="name">ID</label>
-                                <input type="text" name="id" id="id" autoComplete="off" value={id} onChange={handleChange} />
+                                <input ref={idInputEl} type="text" name="id" id="id" autoComplete="off" value={id} onChange={handleChange} />
                             </div>
                             <div className="field">
                                 <label htmlFor="email">PASSWORD</label>
