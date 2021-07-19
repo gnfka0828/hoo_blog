@@ -3,7 +3,7 @@ const app = express();
 const PORT = process.env.PORT || 5020;
 const dbconfig = require('./config/keys');
 const crypto = require('crypto');
-const privatekey = dbconfig.privatekey
+const privatekey = dbconfig.privatekey;
 
 const decryptPrivateKey = function(cipherText) {
     const buffer = Buffer.from(cipherText, "hex");
@@ -39,8 +39,8 @@ app.get('/api/getInfo', (req, res) => {
     //client.end();
 })
 
-app.get('/api/getUser/:id', (req, res) => {
-    client.query("SELECT pw from test_Users where id=$1", [req.params.id] ,(err, data) => {
+app.get('/api/getPW/:id', (req, res) => {
+    client.query("SELECT pw from test_Users where id=$1", [req.params.id], (err, data) => {
         if (!err) {
             res.send(data.rows);
         } else {
@@ -50,6 +50,13 @@ app.get('/api/getUser/:id', (req, res) => {
     });
 
     //client.end();
+})
+
+app.get('/api/getHash/:id/:pw', (req, res) => {
+    const {hashing} = require('./config/hashing');
+    const salt = dbconfig.salt;
+
+    res.send(hashing(req.params.id, req.params.pw, salt));
 })
 
 app.listen(PORT, () => {

@@ -7,11 +7,16 @@ const Login = (props) => {
     const [pw, setPW] = useState('');
 
     const _getUser = async(resolve, reject) => {
-        const res = await axios.get('/api/getUser/' + id );
+        const getPW = await axios.get('/api/getPW/' + id );
+        const hashPW = await axios.get('/api/getHash/' + id + '/' + pw );
+        
+        const res = ( getPW.data && getPW.data[0] && hashPW.data ) ?
+        {
+            getPW: getPW.data[0].pw,
+            hashPW: hashPW.data
+        } : {}
 
-        if ( res.data ) {
-            resolve(res.data);
-        }
+        resolve(res);
     };
 
     const controlLogin = async(event) => {
@@ -28,7 +33,7 @@ const Login = (props) => {
         }).then(res => {
             setDisabled(false);
 
-            if ( res[0] && res[0].pw === pw ) {
+            if ( res.getPW && res.hashPW && ( res.getPW === res.hashPW ) ) {
                 alert("Yes!");
                 props.history.push('/');
             } else {
