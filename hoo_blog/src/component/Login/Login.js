@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import axios from 'axios';
 
 const Login = (props) => {
@@ -6,7 +6,14 @@ const Login = (props) => {
     const [id, setID] = useState('');
     const [pw, setPW] = useState('');
     const idInputEl = useRef(null);
+    const inputForm = useRef(null);
 
+    useEffect(() => {
+        inputForm.current.addEventListener('submit', (event) => {
+            event.preventDefault();
+        });
+    }, []);
+   
     const _getUser = async(resolve, reject) => {
         const getPW = await axios.get('/api/getPW/' + id );
         const hashPW = await axios.get('/api/getHash/' + id + '/' + pw );
@@ -21,15 +28,13 @@ const Login = (props) => {
     };
 
     const controlLogin = async(event) => {
-        if ( id === "" ) {
-            alert("ID를 입력해 주십시오.");
+        if ( id === "" || pw === "" ) {
+            ( id === "" ) ? alert("ID를 입력해 주십시오.") : alert("PASSWORD를 입력해 주십시오.");
             return;
         }
 
         setDisabled(true);
-        event.preventDefault();
         await new Promise((resolve, reject) => {
-            //setTimeout(_getUser, 3000);
             _getUser(resolve, reject);
         }).then(res => {
             setDisabled(false);
@@ -47,20 +52,36 @@ const Login = (props) => {
     };
 
     const handleChange = (e) => {
+        const notAllowedIDRegex = /^[ㄱ-ㅎ|가-힣]+$/;
+        const notAllowedPWRegex = /^$/;                     // 구현 예정.
+
         if ( e.target.id === "id" ) {
+            if ( notAllowedIDRegex.test(e.target.value) ) {
+                alert("허용되지 않는 문자를 입력하셨습니다.");
+                return;
+            }
+
             setID(e.target.value);
         } else if ( e.target.id === "pw" ) {
+            if ( notAllowedPWRegex.test(e.target.value) ) {
+                return;
+            }
+
             setPW(e.target.value);
         } else {
             ;
         }
     }
 
+    const handleBack = () => {
+        props.history.goBack();
+    };
+
     return (
         <section>
             <div>
                 <section className="login">
-                    <form onSubmit={controlLogin}>
+                    <form onSubmit={controlLogin} ref={inputForm}>
                         <div className="fields">
                             <div className="field">
                                 <label htmlFor="name">ID</label>
@@ -73,6 +94,7 @@ const Login = (props) => {
                         </div>
                         <ul className="actions">
                             <li className="primary"><input type="submit" value="Login" disabled={disabled}/></li>
+                            <li><div className="button fit" onClick={handleBack}>Go Home</div></li>
                         </ul>
                     </form>
                 </section>

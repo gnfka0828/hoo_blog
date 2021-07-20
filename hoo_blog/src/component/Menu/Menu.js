@@ -11,8 +11,7 @@ const Menu = () => {
             <li><a href="elements.html">Elements</a></li>
             </ul>
             <ul className="actions stacked">
-            <li><a href="landing.html" className="button primary fit">Get Started</a></li>
-            {/* <li><a href="#menu" className="button fit">Log In</a></li> */}
+            <li><Link to="/Signup" className="button primary fit">Get Started</Link></li>
             <li><Link to="/Login" className="button fit">Log In</Link></li>
             </ul>
             </div>
