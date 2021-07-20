@@ -52,8 +52,7 @@ const Login = (props) => {
     };
 
     const handleChange = (e) => {
-        const notAllowedIDRegex = /^[ㄱ-ㅎ|가-힣]+$/;
-        const notAllowedPWRegex = /^$/;                     // 구현 예정.
+        const notAllowedIDRegex = /[ㄱ-ㅎ|가-힣]+/;
 
         if ( e.target.id === "id" ) {
             if ( notAllowedIDRegex.test(e.target.value) ) {
@@ -63,10 +62,6 @@ const Login = (props) => {
 
             setID(e.target.value);
         } else if ( e.target.id === "pw" ) {
-            if ( notAllowedPWRegex.test(e.target.value) ) {
-                return;
-            }
-
             setPW(e.target.value);
         } else {
             ;
