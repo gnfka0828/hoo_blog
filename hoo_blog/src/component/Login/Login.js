@@ -30,6 +30,7 @@ const Login = (props) => {
     const controlLogin = async(event) => {
         if ( id === "" || pw === "" ) {
             ( id === "" ) ? alert("ID를 입력해 주십시오.") : alert("PASSWORD를 입력해 주십시오.");
+            initInputs();
             return;
         }
 
@@ -44,9 +45,7 @@ const Login = (props) => {
                 props.history.push('/');
             } else {
                 alert("ID나 PASSWORD를 잘못 입력하였습니다. 다시 입력하여 주십시오.");
-                setID("");
-                setPW("");
-                idInputEl.current.focus();
+                initInputs();
             }
         });
     };
@@ -71,6 +70,12 @@ const Login = (props) => {
     const handleBack = () => {
         props.history.goBack();
     };
+
+    const initInputs = () => {
+        setID("");
+        setPW("");
+        idInputEl.current.focus();
+    }
 
     return (
         <section>
