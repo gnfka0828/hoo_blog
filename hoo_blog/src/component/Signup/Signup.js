@@ -15,7 +15,7 @@ const Signup = (props) => {
         });
     }, []);
 
-    const controlLogin = async(event) => {
+    const controlLogin = async(e) => {
         if ( id === "" || pw === "" || confirmPw === "" ) {
             ( id === "" ) ? alert("ID를 입력해 주십시오.") : alert("PASSWORD를 입력해 주십시오.");
             initInputs();
@@ -25,7 +25,22 @@ const Signup = (props) => {
             initInputs();
             return;
         } else {
-            ;
+            const checkIDRegex = /^[a-zA-Z0-9_-]{8,20}$/; // ID 규칙 : 영문자 + 숫자 + 언더바/하이픈 허용 4 ~ 20자리
+            const checkPWRegex = /(?=.*[a-zA-Z])(?=.*?[#?!@$%^&*_-]).{8,24}/; 
+            // PW 규칙 : 영문자 + 특수문자 필수로 넣어서 8 ~ 24자리
+
+            if ( ! checkIDRegex.test(id) ) {
+                alert("ID는 영문자 / 숫자 / 언더바 / 하이픈으로 8 ~ 20자리로 입력해 주십시오.");
+                initInputs();
+                return;
+            } else if ( ! checkPWRegex.test(pw) ) {
+                alert("PW는 영문자 / 특수문자를 넣어서 8 ~ 24자리로 입력해 주십시오.");
+                initInputs();
+                return;
+            } else {
+                // 아이디 & 비밀번호 해싱하고 저장하는 과정 필요.
+                ;
+            }
         }
     };
 
