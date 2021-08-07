@@ -19,7 +19,7 @@ function App() {
   }
 
   const _getInfo = useCallback(async() => {
-    const res = await axios.get('/api/getInfo');
+    const res = await axios.get('/api/getUsers');
     
     if ( JSON.stringify(prevInfo) !== JSON.stringify(res.data) ) {
       setInfo(res.data);

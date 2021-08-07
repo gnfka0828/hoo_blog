@@ -14,7 +14,7 @@ const Login = (props) => {
         });
     }, []);
    
-    const _getUser = async(resolve, reject) => {
+    const _getPW = async(resolve, reject) => {
         const getPW = await axios.get('/api/getPW/' + id );
         const hashPW = await axios.get('/api/getHash/' + id + '/' + pw );
         
@@ -36,7 +36,7 @@ const Login = (props) => {
 
         setDisabled(true);
         await new Promise((resolve, reject) => {
-            _getUser(resolve, reject);
+            _getPW(resolve, reject);
         }).then(res => {
             setDisabled(false);
 

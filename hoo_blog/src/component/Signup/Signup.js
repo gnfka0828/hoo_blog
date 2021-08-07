@@ -15,7 +15,25 @@ const Signup = (props) => {
         });
     }, []);
 
-    const controlLogin = async(e) => {
+    const _isExistUser = async(resolve, reject) => {
+        const findUser = await axios.get('/api/getPW/' + id );
+        const hashPW = await axios.get('/api/getHash/' + id + '/' + pw );
+
+        const res = ( findUser && findUser.data ) ?
+        {
+            isExistUser: ( findUser.data.length !== 0 ),
+            hashPW: hashPW.data
+        } : {}
+            
+        resolve(res);
+    };
+
+    const _registerUser = async(res) => {
+        console.log("registeruser res : ", res, id)
+        return res;
+    };
+
+    const controlSignup = async(e) => {
         if ( id === "" || pw === "" || confirmPw === "" ) {
             ( id === "" ) ? alert("ID를 입력해 주십시오.") : alert("PASSWORD를 입력해 주십시오.");
             initInputs();
@@ -38,8 +56,26 @@ const Signup = (props) => {
                 initInputs();
                 return;
             } else {
-                // 아이디 & 비밀번호 해싱하고 저장하는 과정 필요.
-                ;
+                setDisabled(true);
+
+                await new Promise((resolve, reject) => {
+                    _isExistUser(resolve, reject);
+                }).then((res) => {
+                    if ( res.isExistUser === true ) {
+                        alert("해당 ID가 이미 존재합니다.");
+                        return;
+                    } else {
+                        return _registerUser(res);
+                    }
+                }).then((res) => {
+                    console.log("res : ", res);
+                    setDisabled(false);
+                    initInputs();
+                }).catch((err) => {
+                    console.log(err);
+                    setDisabled(false);
+                    initInputs();
+                });
             }
         }
     };
@@ -77,7 +113,7 @@ const Signup = (props) => {
         <section>
             <div>
                 <section className="login">
-                    <form onSubmit={controlLogin} ref={inputForm}>
+                    <form onSubmit={controlSignup} ref={inputForm}>
                         <div className="fields">
                             <div className="field">
                                 <label htmlFor="name">ID</label>

@@ -39,6 +39,19 @@ app.get('/api/getInfo', (req, res) => {
     //client.end();
 })
 
+app.get('/api/getUsers', (req, res) => {
+    client.query('SELECT COUNT(id) from test_Users', (err, data) => {
+        if (!err) {
+            res.send(data.rows[0].count);
+        } else {
+            console.log(err);
+            res.send(err);
+        }
+    });
+
+    //client.end();
+})
+
 app.get('/api/getPW/:id', (req, res) => {
     client.query("SELECT pw from test_Users where id=$1", [req.params.id], (err, data) => {
         if (!err) {
@@ -58,6 +71,18 @@ app.get('/api/getHash/:id/:pw', (req, res) => {
 
     res.send(hashing(req.params.id, req.params.pw, salt));
 })
+
+// 추후 아이디 등록 로직 추가 필요.
+// app.get('/api/registerUser/:id/:pw', (req, res) => {
+//     client.query("INSERT INTO test_Users (index, id, pw) VALUES (2, 'kildong', 'hong')", [req.params.id], (err, data) => {
+//         if (!err) {
+//             res.send(data.rows);
+//         } else {
+//             console.log(err);
+//             res.send(err);
+//         }
+//     });
+// })
 
 app.listen(PORT, () => {
     console.log(`Server On : http://localhost:${PORT}/`);
