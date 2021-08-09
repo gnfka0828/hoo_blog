@@ -6,13 +6,18 @@ const crypto = require('crypto');
 const privatekey = dbconfig.privatekey;
 
 const decryptPrivateKey = function(cipherText) {
-    const buffer = Buffer.from(cipherText, "hex");
-    const decrypted = crypto.privateDecrypt({key: privatekey, passphrase: "hooblog"}, buffer);
-    return decrypted.toString("utf8");
+    if ( typeof cipherText === "string" ) {
+        const buffer = Buffer.from(cipherText, "hex");
+        const decrypted = crypto.privateDecrypt({key: privatekey, passphrase: "hooblog"}, buffer);
+        return decrypted.toString("utf8");
+    } else {
+        console.log("로그인 데이터가 없습니다.");
+        return "";
+    }
 };
 
 const decrypted = decryptPrivateKey(dbconfig.encryptedDBInfo);
-const dbInfo = JSON.parse(decrypted);
+const dbInfo = ( decrypted === "" ) ? {} : JSON.parse(decrypted);
 var {Client} = require('pg');
 const client = new Client(dbInfo);
 
