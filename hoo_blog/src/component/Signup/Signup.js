@@ -1,5 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import axios from 'axios';
+import { useSelector, useDispatch } from "react-redux";
+import * as actions from '../../redux/actions';
 
 const Signup = (props) => {
     const [disabled, setDisabled] = useState(false);
@@ -8,12 +10,20 @@ const Signup = (props) => {
     const [confirmPw, setConfirmPw] = useState('');
     const idInputEl = useRef(null);
     const inputForm = useRef(null);
+    const dispatch = useDispatch();
+    const store = useSelector((store) => store.usernum);
+
+    const _getNumberOfUsers = useCallback(async() => {
+        const res = await axios.get('/api/getNumberOfUsers');
+        dispatch(actions.updateUsernum(res.data));
+      }, [dispatch]);
 
     useEffect(() => {
         inputForm.current.addEventListener('submit', (event) => {
             event.preventDefault();
         });
-    }, []);
+        _getNumberOfUsers();
+    }, [_getNumberOfUsers]);
 
     const _isExistUser = async(resolve, reject) => {
         const findUser = await axios.get('/api/getPW/' + id );
@@ -29,7 +39,7 @@ const Signup = (props) => {
     };
 
     const _registerUser = async(res) => {
-        console.log("registeruser res : ", res, id)
+        res = await axios.get('/api/registerUser/' + id + '/' + res.hashPW + '/' + ( store.usernum + 1 ) );
         return res;
     };
 
@@ -68,11 +78,18 @@ const Signup = (props) => {
                         return _registerUser(res);
                     }
                 }).then((res) => {
-                    console.log("res : ", res);
                     setDisabled(false);
                     initInputs();
+
+                    if ( res.data === true ) {
+                        alert("회원가입이 완료되었습니다. 로그인하여 주십시오.");
+                        handleBack();
+                    } else {
+                        alert("오류가 발생하였습니다.");
+                    }
                 }).catch((err) => {
                     console.log(err);
+                    alert("오류가 발생하였습니다.");
                     setDisabled(false);
                     initInputs();
                 });
