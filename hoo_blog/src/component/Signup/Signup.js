@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import axios from 'axios';
 import { useSelector, useDispatch } from "react-redux";
 import * as actions from '../../redux/actions';
+import Swal from 'sweetalert2';
 
 const Signup = (props) => {
     const [disabled, setDisabled] = useState(false);
@@ -45,11 +46,25 @@ const Signup = (props) => {
 
     const controlSignup = async(e) => {
         if ( id === "" || pw === "" || confirmPw === "" ) {
-            ( id === "" ) ? alert("ID를 입력해 주십시오.") : alert("PASSWORD를 입력해 주십시오.");
+            ( id === "" ) ? 
+                Swal.fire({
+                    title: "ID를 입력해 주십시오.",
+                    icon: 'warning',
+                    confirmButtonText: '확인',
+                }) : 
+                Swal.fire({
+                    title: "PASSWORD를 입력해 주십시오.",
+                    icon: 'warning',
+                    confirmButtonText: '확인',
+                });
             initInputs();
             return;
         } else if ( pw !== confirmPw ) {
-            alert("PASSWORD와 CONFIRM PASSWORD의 내용이 일치하지 않습니다.");
+            Swal.fire({
+                title: "PASSWORD와 CONFIRM PASSWORD의 내용이 일치하지 않습니다.",
+                icon: 'warning',
+                confirmButtonText: '확인',
+            });
             initInputs();
             return;
         } else {
@@ -58,11 +73,19 @@ const Signup = (props) => {
             // PW 규칙 : 영문자 + 특수문자 필수로 넣어서 8 ~ 24자리
 
             if ( ! checkIDRegex.test(id) ) {
-                alert("ID는 영문자 / 숫자 / 언더바 / 하이픈으로 8 ~ 20자리로 입력해 주십시오.");
+                Swal.fire({
+                    title: "ID는 영문자 / 숫자 / 언더바 / 하이픈으로 8 ~ 20자리로 입력해 주십시오.",
+                    icon: 'warning',
+                    confirmButtonText: '확인',
+                });
                 initInputs();
                 return;
             } else if ( ! checkPWRegex.test(pw) ) {
-                alert("PW는 영문자 / 특수문자를 넣어서 8 ~ 24자리로 입력해 주십시오.");
+                Swal.fire({
+                    title: "PW는 영문자 / 특수문자를 넣어서 8 ~ 24자리로 입력해 주십시오.",
+                    icon: 'warning',
+                    confirmButtonText: '확인',
+                });
                 initInputs();
                 return;
             } else {
@@ -72,7 +95,11 @@ const Signup = (props) => {
                     _isExistUser(resolve, reject);
                 }).then((res) => {
                     if ( res.isExistUser === true ) {
-                        alert("해당 ID가 이미 존재합니다.");
+                        Swal.fire({
+                            title: "해당 ID가 이미 존재합니다.",
+                            icon: 'warning',
+                            confirmButtonText: '확인',
+                        });
                         return;
                     } else {
                         return _registerUser(res);
@@ -82,14 +109,27 @@ const Signup = (props) => {
                     initInputs();
 
                     if ( res.data === true ) {
-                        alert("회원가입이 완료되었습니다. 로그인하여 주십시오.");
-                        handleBack();
+                        Swal.fire({
+                            title: "회원가입이 완료되었습니다. \n로그인하여 주십시오.",
+                            icon: 'success',
+                            confirmButtonText: '확인',
+                        }).then(() => {
+                            handleBack();
+                        });
                     } else {
-                        alert("오류가 발생하였습니다.");
+                        Swal.fire({
+                            title: "오류가 발생하였습니다.",
+                            icon: 'warning',
+                            confirmButtonText: '확인',
+                        });
                     }
                 }).catch((err) => {
                     console.log(err);
-                    alert("오류가 발생하였습니다.");
+                    Swal.fire({
+                        title: "오류가 발생하였습니다.",
+                        icon: 'warning',
+                        confirmButtonText: '확인',
+                    });
                     setDisabled(false);
                     initInputs();
                 });
@@ -102,7 +142,11 @@ const Signup = (props) => {
 
         if ( e.target.id === "id" ) {
             if ( notAllowedIDRegex.test(e.target.value) ) {
-                alert("허용되지 않는 문자를 입력하셨습니다.");
+                Swal.fire({
+                    title: "허용되지 않는 문자를 입력하셨습니다.",
+                    icon: 'warning',
+                    confirmButtonText: '확인',
+                });
                 return;
             }
             setID(e.target.value);

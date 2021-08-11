@@ -74,6 +74,15 @@ input, select, textarea {
 	appearance: none;
 }
 
+.swal2-title {
+	font-size: 1.5em !important;
+}
+
+.swal2-confirm.swal2-styled {
+	padding: 0 1.75em;
+	font-family: inherit;
+}
+
 /* Basic */
 
 	@-ms-viewport {

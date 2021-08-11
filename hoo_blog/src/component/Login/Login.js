@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const Login = (props) => {
     const [disabled, setDisabled] = useState(false);
@@ -29,7 +30,17 @@ const Login = (props) => {
 
     const controlLogin = async(event) => {
         if ( id === "" || pw === "" ) {
-            ( id === "" ) ? alert("ID를 입력해 주십시오.") : alert("PASSWORD를 입력해 주십시오.");
+            ( id === "" ) ? 
+                Swal.fire({
+                    title: "ID를 입력해 주십시오.",
+                    icon: 'warning',
+                    confirmButtonText: '확인',
+                }) : 
+                Swal.fire({
+                    title: "PASSWORD를 입력해 주십시오.",
+                    icon: 'warning',
+                    confirmButtonText: '확인',
+                });
             initInputs();
             return;
         }
@@ -41,10 +52,19 @@ const Login = (props) => {
             setDisabled(false);
 
             if ( res.getPW && res.hashPW && ( res.getPW === res.hashPW ) ) {
-                alert("Yes!");
-                props.history.push('/');
+                Swal.fire({
+                    title: "Yes!",
+                    icon: 'success',
+                    confirmButtonText: '확인',
+                }).then(() => {
+                    props.history.push('/');
+                });
             } else {
-                alert("ID나 PASSWORD를 잘못 입력하였습니다. 다시 입력하여 주십시오.");
+                Swal.fire({
+                    title: "ID나 PASSWORD를 잘못 입력하였습니다. 다시 입력하여 주십시오.",
+                    icon: 'warning',
+                    confirmButtonText: '확인',
+                });
                 initInputs();
             }
         });
@@ -55,7 +75,11 @@ const Login = (props) => {
 
         if ( e.target.id === "id" ) {
             if ( notAllowedIDRegex.test(e.target.value) ) {
-                alert("허용되지 않는 문자를 입력하셨습니다.");
+                Swal.fire({
+                    title: "허용되지 않는 문자를 입력하셨습니다.",
+                    icon: 'warning',
+                    confirmButtonText: '확인',
+                });
                 return;
             }
 
