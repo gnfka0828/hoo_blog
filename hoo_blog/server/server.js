@@ -5,6 +5,9 @@ const dbconfig = require('./config/keys');
 const crypto = require('crypto');
 const privatekey = dbconfig.privatekey;
 
+const {hashing} = require('./config/hashing');
+const salt = dbconfig.salt;
+
 const decryptPrivateKey = function(cipherText) {
     if ( typeof cipherText === "string" ) {
         const buffer = Buffer.from(cipherText, "hex");
@@ -70,10 +73,12 @@ app.get('/api/getNumberOfUsers', (req, res) => {
     //client.end();
 })
 
-app.get('/api/getPW/:id', (req, res) => {
-    client.query("SELECT pw from test_Users where id=$1", [req.params.id], (err, data) => {
+app.get('/api/finduser/:id', (req, res) => {
+    client.query("SELECT count(id) from test_Users where id=$1", [req.params.id], (err, data) => {
+        console.log("finduser : ", err, data);
+
         if (!err) {
-            res.send(data.rows);
+            res.send( ( data.rows[0].count > 0 ) ? true : false );
         } else {
             console.log(err);
             res.send(err);
@@ -83,15 +88,25 @@ app.get('/api/getPW/:id', (req, res) => {
     //client.end();
 })
 
-app.get('/api/getHash/:id/:pw', (req, res) => {
-    const {hashing} = require('./config/hashing');
-    const salt = dbconfig.salt;
+app.get('/api/confirmPW/:id/:pw', (req, res) => {
+    const hashPW = hashing(req.params.id, req.params.pw, salt);
 
-    res.send(hashing(req.params.id, req.params.pw, salt));
+    client.query("SELECT pw from test_Users where id=$1", [req.params.id], (err, data) => {
+        if (!err) {
+            res.send( ( data.rows === hashPW ) ? true : false );
+        } else {
+            console.log(err);
+            res.send(err);
+        }
+    });
+
+    //client.end();
 })
 
 app.get('/api/registerUser/:id/:pw/:index', (req, res) => {
-    client.query("INSERT INTO test_Users (idx, id, pw) VALUES ($1, $2, $3)", [req.params.index, req.params.id, req.params.pw], (err, data) => {
+    const hashPW = hashing(req.params.id, req.params.pw, salt);
+
+    client.query("INSERT INTO test_Users (idx, id, pw) VALUES ($1, $2, $3)", [req.params.index, req.params.id, hashPW], (err, data) => {
         if (!err) {
             res.send(true);
         } else {

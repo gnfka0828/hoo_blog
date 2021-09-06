@@ -27,20 +27,13 @@ const Signup = (props) => {
     }, [_getNumberOfUsers]);
 
     const _isExistUser = async(resolve, reject) => {
-        const findUser = await axios.get('/api/getPW/' + id );
-        const hashPW = await axios.get('/api/getHash/' + id + '/' + pw );
-
-        const res = ( findUser && findUser.data ) ?
-        {
-            isExistUser: ( findUser.data.length !== 0 ),
-            hashPW: hashPW.data
-        } : {}
+        const isExistUser = await axios.get('/api/finduser/' + id );
             
-        resolve(res);
+        resolve(isExistUser);
     };
 
     const _registerUser = async(res) => {
-        res = await axios.get('/api/registerUser/' + id + '/' + res.hashPW + '/' + ( store.usernum + 1 ) );
+        res = await axios.get('/api/registerUser/' + id + '/' + pw + '/' + ( store.usernum + 1 ) );
         return res;
     };
 
@@ -94,13 +87,13 @@ const Signup = (props) => {
                 await new Promise((resolve, reject) => {
                     _isExistUser(resolve, reject);
                 }).then((res) => {
-                    if ( res.isExistUser === true ) {
+                    if ( res.data === true ) {
                         Swal.fire({
                             title: "해당 ID가 이미 존재합니다.",
                             icon: 'warning',
                             confirmButtonText: '확인',
                         });
-                        return;
+                        return "id_already_exist";
                     } else {
                         return _registerUser(res);
                     }
@@ -116,6 +109,8 @@ const Signup = (props) => {
                         }).then(() => {
                             handleBack();
                         });
+                    } else if ( res === "id_already_exist" ) {
+                        ;
                     } else {
                         Swal.fire({
                             title: "오류가 발생하였습니다.",

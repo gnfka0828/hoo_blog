@@ -15,17 +15,10 @@ const Login = (props) => {
         });
     }, []);
    
-    const _getPW = async(resolve, reject) => {
-        const getPW = await axios.get('/api/getPW/' + id );
-        const hashPW = await axios.get('/api/getHash/' + id + '/' + pw );
-        
-        const res = ( getPW.data && getPW.data[0] && hashPW.data ) ?
-        {
-            getPW: getPW.data[0].pw,
-            hashPW: hashPW.data
-        } : {}
+    const _confirmPW = async(resolve, reject) => {
+        const confirmPW = await axios.get('/api/confirmPW/' + id + '/' + pw );
 
-        resolve(res);
+        resolve(confirmPW);
     };
 
     const controlLogin = async(event) => {
@@ -47,11 +40,11 @@ const Login = (props) => {
 
         setDisabled(true);
         await new Promise((resolve, reject) => {
-            _getPW(resolve, reject);
+            _confirmPW(resolve, reject);
         }).then(res => {
             setDisabled(false);
 
-            if ( res.getPW && res.hashPW && ( res.getPW === res.hashPW ) ) {
+            if ( res.data === true ) {
                 Swal.fire({
                     title: "Yes!",
                     icon: 'success',
