@@ -1,6 +1,15 @@
+import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
+import { useSelector } from "react-redux";
 
 const Menu = () => {
+    const [confirmLogin, setConfirmLogin] = useState(false);
+    const store = useSelector(store => store.confirmLogin);
+
+    useEffect(() => {
+        setConfirmLogin(store.confirmLogin);
+    }, [store.confirmLogin]);
+
     return (
         <nav id="menu">
             <div className="inner">
@@ -12,7 +21,11 @@ const Menu = () => {
             </ul>
             <ul className="actions stacked">
             <li><Link to="/Signup" className="button primary fit">Get Started</Link></li>
-            <li><Link to="/Login" className="button fit">Log In</Link></li>
+            <li>
+                {
+                    ( confirmLogin === true ) ? <Link to="/" className="button fit">Logout</Link> : <Link to="/Login" className="button fit">Login</Link>
+                }
+            </li>
             </ul>
             </div>
         </nav>

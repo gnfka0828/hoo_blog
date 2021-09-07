@@ -8,6 +8,8 @@ const privatekey = dbconfig.privatekey;
 const {hashing} = require('./config/hashing');
 const salt = dbconfig.salt;
 
+const session = require('express-session');
+
 const decryptPrivateKey = function(cipherText) {
     if ( typeof cipherText === "string" ) {
         const buffer = Buffer.from(cipherText, "hex");
@@ -25,6 +27,12 @@ var {Client} = require('pg');
 const client = new Client(dbInfo);
 
 client.connect();
+
+app.use(session({
+    secret: '@#@$MYSIGN#@$#$',
+    resave: false,
+    saveUninitialized: true
+}));
 
 app.get('/', (req, res) => {
     res.send("Welcome to Hoo's blog");
@@ -75,8 +83,6 @@ app.get('/api/getNumberOfUsers', (req, res) => {
 
 app.get('/api/finduser/:id', (req, res) => {
     client.query("SELECT count(id) from test_Users where id=$1", [req.params.id], (err, data) => {
-        console.log("finduser : ", err, data);
-
         if (!err) {
             res.send( ( data.rows[0].count > 0 ) ? true : false );
         } else {
@@ -88,12 +94,21 @@ app.get('/api/finduser/:id', (req, res) => {
     //client.end();
 })
 
-app.get('/api/confirmPW/:id/:pw', (req, res) => {
+app.get('/api/confirmLogin', (req, res) => {
+    res.send( req.session.userID ? true : false );
+})
+
+app.get('/api/login/:id/:pw', (req, res) => {
     const hashPW = hashing(req.params.id, req.params.pw, salt);
 
     client.query("SELECT pw from test_Users where id=$1", [req.params.id], (err, data) => {
         if (!err) {
-            res.send( ( data.rows === hashPW ) ? true : false );
+            if ( data.rows[0] && data.rows[0].pw === hashPW ) {
+                req.session.userID = req.params.id;
+                res.send(true);
+            } else {
+                res.send(false);
+            }
         } else {
             console.log(err);
             res.send(err);
@@ -101,6 +116,20 @@ app.get('/api/confirmPW/:id/:pw', (req, res) => {
     });
 
     //client.end();
+})
+
+app.get('/api/logout/', (req, res) => {
+    if(req.session.userID){
+        req.session.destroy((err) => {
+            if(err){
+                console.log(err);
+            }else{
+                res.redirect('/');
+            }
+        })
+    }else{
+        res.redirect('/');
+    }
 })
 
 app.get('/api/registerUser/:id/:pw/:index', (req, res) => {

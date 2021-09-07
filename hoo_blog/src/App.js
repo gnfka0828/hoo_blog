@@ -12,8 +12,6 @@ function App() {
   const [info, setInfo] = useState({});
   const prevInfo = info;
 
-  //const usernum = useSelector((store) => store.usernum);
-
   console.log("info", info);
 
   const _getHost = async() => {

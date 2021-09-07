@@ -1,6 +1,8 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { useDispatch } from "react-redux";
+import * as actions from '../../redux/actions';
 
 const Login = (props) => {
     const [disabled, setDisabled] = useState(false);
@@ -8,6 +10,7 @@ const Login = (props) => {
     const [pw, setPW] = useState('');
     const idInputEl = useRef(null);
     const inputForm = useRef(null);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         inputForm.current.addEventListener('submit', (event) => {
@@ -15,10 +18,15 @@ const Login = (props) => {
         });
     }, []);
    
-    const _confirmPW = async(resolve, reject) => {
-        const confirmPW = await axios.get('/api/confirmPW/' + id + '/' + pw );
+    const _getConfirmLogin = useCallback(async() => {
+        const res = await axios.get('/api/confirmLogin');
+        dispatch(actions.updateConfirmLogin(res.data));
+      }, [dispatch]);
 
-        resolve(confirmPW);
+    const _login = async(resolve, reject) => {
+        const loginPW = await axios.get('/api/login/' + id + '/' + pw );
+
+        resolve(loginPW);
     };
 
     const controlLogin = async(event) => {
@@ -28,19 +36,24 @@ const Login = (props) => {
                     title: "ID를 입력해 주십시오.",
                     icon: 'warning',
                     confirmButtonText: '확인',
+                    returnFocus: false,
+                }).then(() => {
+                    initInputs();
                 }) : 
                 Swal.fire({
                     title: "PASSWORD를 입력해 주십시오.",
                     icon: 'warning',
                     confirmButtonText: '확인',
+                    returnFocus: false,
+                }).then(() => {
+                    initInputs();
                 });
-            initInputs();
             return;
         }
 
         setDisabled(true);
         await new Promise((resolve, reject) => {
-            _confirmPW(resolve, reject);
+            _login(resolve, reject);
         }).then(res => {
             setDisabled(false);
 
@@ -49,7 +62,10 @@ const Login = (props) => {
                     title: "Yes!",
                     icon: 'success',
                     confirmButtonText: '확인',
+                    returnFocus: false,
                 }).then(() => {
+                    initInputs();
+                    _getConfirmLogin();
                     props.history.push('/');
                 });
             } else {
@@ -57,8 +73,10 @@ const Login = (props) => {
                     title: "ID나 PASSWORD를 잘못 입력하였습니다. 다시 입력하여 주십시오.",
                     icon: 'warning',
                     confirmButtonText: '확인',
+                    returnFocus: false,
+                }).then(() => {
+                    initInputs();
                 });
-                initInputs();
             }
         });
     };
@@ -72,6 +90,9 @@ const Login = (props) => {
                     title: "허용되지 않는 문자를 입력하셨습니다.",
                     icon: 'warning',
                     confirmButtonText: '확인',
+                    returnFocus: false,
+                }).then(() => {
+                    initInputs();
                 });
                 return;
             }

@@ -44,21 +44,28 @@ const Signup = (props) => {
                     title: "ID를 입력해 주십시오.",
                     icon: 'warning',
                     confirmButtonText: '확인',
+                    returnFocus: false,
+                }).then(() => {
+                    initInputs();
                 }) : 
                 Swal.fire({
                     title: "PASSWORD를 입력해 주십시오.",
                     icon: 'warning',
                     confirmButtonText: '확인',
+                    returnFocus: false,
+                }).then(() => {
+                    initInputs();
                 });
-            initInputs();
             return;
         } else if ( pw !== confirmPw ) {
             Swal.fire({
                 title: "PASSWORD와 CONFIRM PASSWORD의 내용이 일치하지 않습니다.",
                 icon: 'warning',
                 confirmButtonText: '확인',
+                returnFocus: false,
+            }).then(() => {
+                initInputs();
             });
-            initInputs();
             return;
         } else {
             const checkIDRegex = /^[a-zA-Z0-9_-]{8,20}$/; // ID 규칙 : 영문자 + 숫자 + 언더바/하이픈 허용 4 ~ 20자리
@@ -70,16 +77,20 @@ const Signup = (props) => {
                     title: "ID는 영문자 / 숫자 / 언더바 / 하이픈으로 8 ~ 20자리로 입력해 주십시오.",
                     icon: 'warning',
                     confirmButtonText: '확인',
+                    returnFocus: false,
+                }).then(() => {
+                    initInputs();
                 });
-                initInputs();
                 return;
             } else if ( ! checkPWRegex.test(pw) ) {
                 Swal.fire({
                     title: "PW는 영문자 / 특수문자를 넣어서 8 ~ 24자리로 입력해 주십시오.",
                     icon: 'warning',
                     confirmButtonText: '확인',
+                    returnFocus: false,
+                }).then(() => {
+                    initInputs();
                 });
-                initInputs();
                 return;
             } else {
                 setDisabled(true);
@@ -92,6 +103,7 @@ const Signup = (props) => {
                             title: "해당 ID가 이미 존재합니다.",
                             icon: 'warning',
                             confirmButtonText: '확인',
+                            returnFocus: false,
                         });
                         return "id_already_exist";
                     } else {
@@ -106,6 +118,7 @@ const Signup = (props) => {
                             title: "회원가입이 완료되었습니다. \n로그인하여 주십시오.",
                             icon: 'success',
                             confirmButtonText: '확인',
+                            returnFocus: false,
                         }).then(() => {
                             handleBack();
                         });
@@ -116,6 +129,7 @@ const Signup = (props) => {
                             title: "오류가 발생하였습니다.",
                             icon: 'warning',
                             confirmButtonText: '확인',
+                            returnFocus: false,
                         });
                     }
                 }).catch((err) => {
@@ -124,9 +138,11 @@ const Signup = (props) => {
                         title: "오류가 발생하였습니다.",
                         icon: 'warning',
                         confirmButtonText: '확인',
+                        returnFocus: false,
+                    }).then(() => {
+                        initInputs();
                     });
                     setDisabled(false);
-                    initInputs();
                 });
             }
         }
@@ -141,6 +157,9 @@ const Signup = (props) => {
                     title: "허용되지 않는 문자를 입력하셨습니다.",
                     icon: 'warning',
                     confirmButtonText: '확인',
+                    returnFocus: false,
+                }).then(() => {
+                    initInputs();
                 });
                 return;
             }

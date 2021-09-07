@@ -4,6 +4,7 @@ import Banner from './Banner';
 import {Article, PlusArticle} from './Article';
 import Contact from './Contact';
 import Footer from './Footer';
+import React from 'react';
 
 function Home() {
     return (
