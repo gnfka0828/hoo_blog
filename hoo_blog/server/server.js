@@ -95,7 +95,22 @@ app.get('/api/finduser/:id', (req, res) => {
 })
 
 app.get('/api/confirmLogin', (req, res) => {
-    res.send( req.session.userID ? true : false );
+    res.send(
+        {
+            isLogin: req.session.userID ? true : false,
+            userID: req.session.userID
+        }
+    );
+})
+
+app.get('/api/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(true);
+        }
+    });
 })
 
 app.get('/api/login/:id/:pw', (req, res) => {

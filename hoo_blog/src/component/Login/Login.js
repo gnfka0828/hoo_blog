@@ -21,11 +21,10 @@ const Login = (props) => {
     const _getConfirmLogin = useCallback(async() => {
         const res = await axios.get('/api/confirmLogin');
         dispatch(actions.updateConfirmLogin(res.data));
-      }, [dispatch]);
+    }, [dispatch]);
 
     const _login = async(resolve, reject) => {
         const loginPW = await axios.get('/api/login/' + id + '/' + pw );
-
         resolve(loginPW);
     };
 
@@ -65,6 +64,7 @@ const Login = (props) => {
                     returnFocus: false,
                 }).then(() => {
                     initInputs();
+                    //window.sessionStorage.setItem('loginUser', id);
                     _getConfirmLogin();
                     props.history.push('/');
                 });

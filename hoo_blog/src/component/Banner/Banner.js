@@ -1,9 +1,13 @@
+import { useSelector } from "react-redux";
+
 const Banner = () => {
+    const store = useSelector(store => store.confirmLogin);
+
     return (
         <section id="banner" className="major">
             <div className="inner">
                 <header className="major">
-                    <h1>Hi, my name is hooram</h1>
+                    <h1>Hi, my name is {(store.confirmLogin && ( store.confirmLogin.isLogin === true ) ) ? store.confirmLogin.userID : 'Unknown'}</h1>
                 </header>
                 <div className="content">
                     {/* <p>BBongdong♥Mandugi BBongdong♥Mandugi BBongdong♥Mandugi BBongdong♥Mandugi BBongdong♥Mandugi BBongdong♥Mandugi BBongdong♥Mandugi BBongdong♥Mandugi BBongdong♥Mandugi BBongdong♥Mandugi </p> */}
