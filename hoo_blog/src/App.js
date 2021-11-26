@@ -2,9 +2,12 @@ import React, { useState, useEffect, useCallback } from 'react';
 //import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
+
 import Home from './component/Home';
 import Login from './component/Login';
 import Signup from './component/Signup';
+import Blog from './component/Blog';
+
 import { Route, withRouter } from 'react-router-dom';
 import * as actions from './redux/actions';
 import { useDispatch } from "react-redux";
@@ -48,6 +51,7 @@ function App() {
       <Route exact path="/" component={Home}/>
       <Route exact path="/Login" component={Login}/>
       <Route exact path="/Signup" component={Signup}/>
+      <Route exact path="/Blog" component={Blog}/>
     </>
   );
 }
